@@ -1,18 +1,16 @@
 import { Button } from "@/components/ui/button"
 
-export function App() {
+function App() {
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
+    <div className="flex min-h-screen items-center justify-center bg-background text-foreground">
+      <div className="space-y-6 text-center">
+        <h1 className="text-4xl font-bold tracking-tight">
+          Feature Flag Dashboard
+        </h1>
+        <p className="text-muted-foreground">
+          Tailwind CSS and shadcn/ui are successfully wired up!
+        </p>
+        <Button>Test Button</Button>
       </div>
     </div>
   )
