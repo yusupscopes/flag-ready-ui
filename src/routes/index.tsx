@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute, Link } from "@tanstack/react-router"
 import { useQuery } from "@tanstack/react-query"
 import { fetchFlags } from "@/lib/api"
 import { Button } from "@/components/ui/button"
@@ -38,7 +38,9 @@ export function Dashboard() {
             Manage your feature flags here.
           </p>
         </div>
-        <Button>Create Flag</Button>
+        <Button asChild>
+          <Link to="/create">Create Flag</Link>
+        </Button>
       </div>
 
       <div className="rounded-md border">
@@ -46,15 +48,13 @@ export function Dashboard() {
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
-              <TableHead>Description</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {isLoading && (
               <TableRow>
-                <TableCell colSpan={4} className="h-24 text-center">
+                <TableCell colSpan={3} className="h-24 text-center">
                   <div className="space-y-2">
                     <Skeleton className="h-4 w-full" />
                     <Skeleton className="h-4 w-[80%]" />
@@ -66,7 +66,7 @@ export function Dashboard() {
             {isError && (
               <TableRow>
                 <TableCell
-                  colSpan={4}
+                  colSpan={3}
                   className="h-24 text-center text-destructive"
                 >
                   Error loading flags:{" "}
@@ -76,18 +76,12 @@ export function Dashboard() {
             )}
 
             {flags?.map((flag) => (
-              <TableRow key={flag.id}>
-                <TableCell className="font-medium">{flag.name}</TableCell>
-                <TableCell>{flag.description || "-"}</TableCell>
+              <TableRow key={flag.feature}>
+                <TableCell className="font-medium">{flag.feature}</TableCell>
                 <TableCell>
-                  <Badge variant={flag.isEnabled ? "default" : "secondary"}>
-                    {flag.isEnabled ? "Enabled" : "Disabled"}
+                  <Badge variant={flag.enabled ? "default" : "secondary"}>
+                    {flag.enabled ? "Enabled" : "Disabled"}
                   </Badge>
-                </TableCell>
-                <TableCell className="text-right">
-                  <Button variant="outline" size="sm">
-                    Edit
-                  </Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -95,7 +89,7 @@ export function Dashboard() {
             {flags?.length === 0 && (
               <TableRow>
                 <TableCell
-                  colSpan={4}
+                  colSpan={3}
                   className="h-24 text-center text-muted-foreground"
                 >
                   No feature flags found. Create one to get started.
